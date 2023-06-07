@@ -1,9 +1,9 @@
-import "./App.css";
+import Header from "./Components/Header";
 
 function App() {
   return (
     <>
-      <h1 className="text-rose-950 text-9xl">Travella</h1>
+      <Header />
     </>
   );
 }
