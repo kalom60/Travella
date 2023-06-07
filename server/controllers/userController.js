@@ -1,7 +1,7 @@
 import UserModel from "../models/userModel";
 
 class UserController {
-  static async createPost(req, res) {
+  static async createUser(req, res) {
     const user = await UserModel.createUser(req.body);
     res.status(201).json(user);
   }
