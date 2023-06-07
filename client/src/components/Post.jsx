@@ -1,11 +1,11 @@
 const Post = () => {
   return (
-    <div className="grid grid-cols-[0.9fr,1.1fr] gap-5 mb-8">
-      <div>
+    <div className="md:grid grid-cols-[0.9fr,1.1fr] gap-5 mb-8 sm:block">
+      <div className="">
         <img
           src="https://techcrunch.com/wp-content/uploads/2022/12/lawnmower-Large.jpeg?w=1390&crop=1"
           alt=""
-          className=" max-w-[100%]"
+          className="max-w-[100%]"
         />
       </div>
       <div>
