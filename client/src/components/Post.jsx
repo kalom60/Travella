@@ -1,6 +1,6 @@
 const Post = () => {
   return (
-    <div className="md:grid grid-cols-[0.9fr,1.1fr] gap-5 mb-8 sm:block">
+    <div className="md:grid grid-cols-[0.9fr,1.1fr] gap-5 mb-8 mt-5 sm:block">
       <div className="">
         <img
           src="https://techcrunch.com/wp-content/uploads/2022/12/lawnmower-Large.jpeg?w=1390&crop=1"

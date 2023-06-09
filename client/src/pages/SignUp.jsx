@@ -1,6 +1,34 @@
+import { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 
 const SignUp = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post("http://localhost:5000/api/users", user);
+      message.success("Success");
+    } catch (err) {
+      console.log(err);
+      message.error("Error");
+    }
+  };
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div>
       <section>
@@ -10,44 +38,53 @@ const SignUp = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-center">
                 Sign up for an account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block mb-2 text-sm font-medium">
-                    Your name
+                    Your name {"  "}
+                    <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
                     name="name"
                     id="name"
+                    value={user.name}
+                    onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     placeholder="John"
-                    required=""
+                    required
                   />
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium">
-                    Your email
+                    Your email {"  "}
+                    <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    value={user.email}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="name@company.com"
-                    required=""
+                    required
                   />
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium">
-                    Password
+                    Password {"  "}
+                    <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="password"
                     name="password"
                     id="password"
+                    value={user.password}
+                    onChange={handleChange}
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                    required=""
+                    required
                   />
                 </div>
                 {/* <div>
@@ -71,7 +108,7 @@ const SignUp = () => {
                   Sign up
                 </button>
                 <p className="text-sm font-light text-gray-500  text-center">
-                  Don’t have an account yet?{" "}
+                  Already have an account?{" "}
                   <Link
                     to="/signin"
                     className="font-medium text-primary-600 hover:underline "
