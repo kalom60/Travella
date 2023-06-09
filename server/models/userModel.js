@@ -4,18 +4,24 @@ require("express-async-errors");
 
 class UserModel {
   static async createUser(data) {
-    console.log("data", data);
+    const checkIfUserExists = await prisma.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (checkIfUserExists) {
+      const error = new Error("User with this email alreay exists.");
+      error.statusCode = 404;
+      throw error;
+    }
+
     const hashedPassword = await hashPassword(data.password);
-    data.password = hashedPassword;
+    const user = await prisma.user.create({
+      data,
+    });
 
-    console.log(data);
-    return data;
-
-    // const user = await prisma.user.create({
-    //   data,
-    // });
-
-    // return user;
+    return user;
   }
 
   static async getUser(id) {
@@ -25,7 +31,7 @@ class UserModel {
 
     if (!user) {
       const error = new Error("User not found");
-      error.statusCode(404);
+      error.statusCode = 404;
       throw error;
     }
 
@@ -44,7 +50,7 @@ class UserModel {
 
     if (!user) {
       const error = new Error("User not found");
-      error.statusCode(404);
+      error.statusCode = 404;
       throw error;
     }
 

@@ -17,8 +17,7 @@ const SignUp = () => {
       await axios.post("http://localhost:5000/api/users", user);
       message.success("Success");
     } catch (err) {
-      console.log(err);
-      message.error("Error");
+      message.error(err.response.data.msg);
     }
   };
 
