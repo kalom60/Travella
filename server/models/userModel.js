@@ -1,13 +1,21 @@
 import prisma from "../prisma/prisma";
+import hashPassword from "../utils/hashPassword";
 require("express-async-errors");
 
 class UserModel {
   static async createUser(data) {
-    const user = await prisma.user.create({
-      data,
-    });
+    console.log("data", data);
+    const hashedPassword = await hashPassword(data.password);
+    data.password = hashedPassword;
 
-    return user;
+    console.log(data);
+    return data;
+
+    // const user = await prisma.user.create({
+    //   data,
+    // });
+
+    // return user;
   }
 
   static async getUser(id) {
@@ -25,6 +33,11 @@ class UserModel {
   }
 
   static async updateUser(id, data) {
+    if (data.password) {
+      const hashedPassword = await hashPassword(data.password);
+      data.password = hashedPassword;
+    }
+
     const user = await prisma.user.findUnique({
       where: { id },
     });
